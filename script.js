@@ -1,5 +1,7 @@
 'use strict';
 
+document.documentElement.classList.replace('no-js', 'js');
+
 /* PREENCHA SOMENTE COM DADOS CONFIRMADOS.
  * whatsapp: DDI + DDD + número, somente dígitos.
  * email: endereço real que receberá o contato.
@@ -13,12 +15,13 @@ const CONTACT_CONFIG = Object.freeze({ whatsapp: '5521982277181', email: '', end
   const header = document.querySelector('.header');
   const menu = document.querySelector('#menu-principal');
   const toggle = document.querySelector('.menu-toggle');
-  const mobile = window.matchMedia('(max-width: 980px)');
+  const mobile = window.matchMedia('(max-width: 840px)');
 
   function closeMenu(restoreFocus = false) {
     toggle.setAttribute('aria-expanded', 'false');
     toggle.setAttribute('aria-label', 'Abrir menu');
     menu.classList.remove('is-open');
+    document.body.classList.remove('menu-open');
     if (restoreFocus) toggle.focus();
   }
   toggle.addEventListener('click', () => {
@@ -26,6 +29,7 @@ const CONTACT_CONFIG = Object.freeze({ whatsapp: '5521982277181', email: '', end
     toggle.setAttribute('aria-expanded', String(opening));
     toggle.setAttribute('aria-label', opening ? 'Fechar menu' : 'Abrir menu');
     menu.classList.toggle('is-open', opening);
+    document.body.classList.toggle('menu-open', opening && mobile.matches);
   });
   menu.addEventListener('click', event => {
     if (event.target.closest('a')) closeMenu();
